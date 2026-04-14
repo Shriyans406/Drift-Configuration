@@ -4,8 +4,8 @@ import hashlib
 from datetime import datetime
 
 CONFIG_FILES = [
-    "/etc/nginx/nginx.conf",
-    "/etc/ssh/sshd_config"
+    "/etc/ssh/sshd_config",
+    "/etc/hosts"
 ]
 
 def generate_hash(file_path):
