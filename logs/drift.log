@@ -1,0 +1,75 @@
+
+=== DRIFT DETECTED ===
+File: /etc/ssh/sshd_config
+Severity: HIGH
+Reason: SSH configuration changed
+Time: 2026-04-15 12:59:01.916479
+
+Changes:
+[ADDED] Port 2222
+======================
+
+
+=== DRIFT DETECTED ===
+File: /etc/hosts
+Severity: LOW
+Reason: Hosts file updated
+Time: 2026-04-15 12:59:01.919464
+
+Changes:
+[REMOVED] 
+[REMOVED] 127.0.0.1        test-drift
+[ADDED] 127.0.0.1 drift-check-final
+[ADDED] 127.0.0.1 phase3-test
+======================
+
+
+=== DRIFT DETECTED ===
+File: /etc/ssh/sshd_config
+Severity: HIGH
+Reason: SSH configuration changed
+Time: 2026-04-15 13:00:40.802778
+
+Changes:
+[ADDED] Port 2222
+======================
+
+
+=== DRIFT DETECTED ===
+File: /etc/hosts
+Severity: LOW
+Reason: Hosts file updated
+Time: 2026-04-15 13:00:40.803425
+
+Changes:
+[REMOVED] 
+[REMOVED] 127.0.0.1        test-drift
+[ADDED] 127.0.0.1 drift-check-final
+[ADDED] 127.0.0.1 phase3-test
+======================
+
+
+=== DRIFT DETECTED ===
+File: /etc/ssh/sshd_config
+Severity: HIGH
+Reason: SSH configuration changed
+Time: 2026-04-15 13:02:51.554359
+
+Changes:
+[ADDED] Port 2222
+======================
+
+
+=== DRIFT DETECTED ===
+File: /etc/hosts
+Severity: LOW
+Reason: Hosts file updated
+Time: 2026-04-15 13:02:51.554846
+
+Changes:
+[REMOVED] 
+[REMOVED] 127.0.0.1        test-drift
+[ADDED] 127.0.0.1 drift-check-final
+[ADDED] 127.0.0.1 phase3-test
+======================
+
