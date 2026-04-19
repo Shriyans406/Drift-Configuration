@@ -3,6 +3,8 @@ import json
 import hashlib
 import difflib
 from datetime import datetime
+import subprocess
+import json
 
 CONFIG_FILES = [
     "/etc/ssh/sshd_config",
@@ -79,6 +81,22 @@ def log_output(message):
     with open(LOG_PATH, "a") as log_file:
         log_file.write(message + "\n")
 
+#newly added
+def run_rust_engine():
+    print("[DEBUG] Running Rust binary...")
+
+    result = subprocess.run(
+        ["./rust_engine/target/debug/rust_engine"],
+        capture_output=True,
+        text=True
+    )
+
+    print("[DEBUG] Return code:", result.returncode)
+    print("[DEBUG] STDOUT:", result.stdout)
+    print("[DEBUG] STDERR:", result.stderr)
+
+    return result.stdout
+
 def run_pipeline():
     baseline = load_baseline()
 
@@ -122,5 +140,22 @@ Changes:
 
 if __name__ == "__main__":
     print("Starting Config Drift Detector...\n")
-    run_pipeline()
-    print("\nDone.")
+
+    #newly added
+output = run_rust_engine()
+
+try:
+    data = json.loads(output)
+
+    for entry in data:
+        if entry["drift"]:
+            print(f"\n[DRIFT] {entry['file']}")
+            for change in entry["changes"]:
+                print(change)
+
+except Exception as e:
+    print("Error parsing Rust output:", e)
+
+log_output(output)
+
+print("\nDone.")

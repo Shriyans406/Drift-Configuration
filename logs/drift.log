@@ -73,3 +73,40 @@ Changes:
 [ADDED] 127.0.0.1 phase3-test
 ======================
 
+
+
+
+Current working directory: "/home/vboxuser/projects/config-drift-detector"
+Trying to read: data/baseline.json
+Running Rust Drift Engine...
+
+Checking: /etc/hosts
+DRIFT DETECTED!
+[ADDED] 127.0.0.1 drift-check-final
+[ADDED] 127.0.0.1 phase3-test
+[REMOVED] 127.0.0.1        test-drift
+
+Checking: /etc/ssh/sshd_config
+DRIFT DETECTED!
+[ADDED] Port 2222
+
+
+[
+  {
+    "file": "/etc/ssh/sshd_config",
+    "drift": true,
+    "changes": [
+      "[ADDED] Port 2222"
+    ]
+  },
+  {
+    "file": "/etc/hosts",
+    "drift": true,
+    "changes": [
+      "[ADDED] 127.0.0.1 drift-check-final",
+      "[ADDED] 127.0.0.1 phase3-test",
+      "[REMOVED] 127.0.0.1        test-drift"
+    ]
+  }
+]
+

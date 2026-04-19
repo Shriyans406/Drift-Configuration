@@ -2,6 +2,11 @@ use std::fs;
 use std::collections::HashMap;
 use serde::Deserialize;
 
+use std::env;
+
+use serde::Serialize;
+
+
 #[derive(Deserialize)]
 struct FileData {
     hash: String,
@@ -45,38 +50,48 @@ fn generate_diff(old_content: &str, new_content: &str) -> Vec<String> {
     changes
 }
 
+
+#[derive(Serialize)]
+struct DriftResult {
+    file: String,
+    drift: bool,
+    changes: Vec<String>,
+}
+
+
 fn main() {
-    let baseline_path = "../data/baseline.json";
+    let baseline_path = "/home/vboxuser/projects/config-drift-detector/data/baseline.json";
 
     let baseline = load_baseline(baseline_path);
 
-    println!("Running Rust Drift Engine...\n");
+    let mut results: Vec<DriftResult> = Vec::new();
 
     for (file, data) in baseline.iter() {
-        println!("Checking: {}", file);
 
         let current_content = match fs::read_to_string(file) {
             Ok(content) => content,
-            Err(_) => {
-                println!("[ERROR] Cannot read file\n");
-                continue;
-            }
+            Err(_) => continue,
         };
 
         let current_hash = generate_hash(file);
 
         if current_hash != data.hash {
-            println!("DRIFT DETECTED!");
-
             let changes = generate_diff(&data.content, &current_content);
 
-            for change in changes {
-                println!("{}", change);
-            }
+            results.push(DriftResult {
+                file: file.to_string(),
+                drift: true,
+                changes,
+            });
         } else {
-            println!("No change.");
+            results.push(DriftResult {
+                file: file.to_string(),
+                drift: false,
+                changes: vec![],
+            });
         }
-
-        println!();
     }
+
+    let json_output = serde_json::to_string_pretty(&results).unwrap();
+    println!("{}", json_output);
 }
